@@ -5,6 +5,7 @@ const products = []
 class ProductManager {
     constructor() {
         this.products = products
+        // this.path = path
     }
 
     addProduct(product){
@@ -33,7 +34,17 @@ class ProductManager {
         if(!product) return 'Product not Found'
         return product
         }
+
+    removeProductById (id) {
+        const index = this.products.findIndex(product => product.id === id);
+        if (index !== -1) {
+            this.products.splice(index, 1);
+        }
+        console.log("El producto fue eliminado correctamente")
     }
+        
+}
+
 
 const product = new ProductManager()
 
@@ -89,5 +100,6 @@ product.addProduct({
 
 
 console.log("Products stock: \n",product.getProducts())
-console.log("Products with id: \n", product.getProductById(2))
-
+console.log("Products with id: \n", product.getProductById(3))
+product.removeProductById(2)
+console.log("Products stock: \n",product.getProducts())
