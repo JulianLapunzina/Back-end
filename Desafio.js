@@ -1,4 +1,18 @@
-        // Desafío N° 1 - Julián Lapunzina
+        // Desafío N° 1 y 2 - Julián Lapunzina
+
+const { error } = require("console")
+const fs = require("fs")
+
+const read = () => {
+    try {
+        fs.readFile("./package.json","utf-8", contenido)
+        return contenido 
+    } catch {
+        console.log(err)
+    }
+
+}
+
 
 const products = []
 
@@ -35,16 +49,21 @@ class ProductManager {
         return product
         }
 
-    removeProductById (id) {
+    deleteProduct(id) {
         const index = this.products.findIndex(product => product.id === id);
         if (index !== -1) {
             this.products.splice(index, 1);
         }
         console.log("El producto fue eliminado correctamente")
     }
+    // Método para actualizar el stock del producto (podría haber actualizado otras cosas pero lo dejé así para no hacerlo tan largo) 
+    updateProduct(id, stock) {
+        const product = this.products.find(prod => prod.id === id)
+        product.stock = stock
+        return console.log(`The product with id "${id}" was updated`)
+    }
         
 }
-
 
 const product = new ProductManager()
 
@@ -101,5 +120,8 @@ product.addProduct({
 
 console.log("Products stock: \n",product.getProducts())
 console.log("Products with id: \n", product.getProductById(3))
-product.removeProductById(2)
+product.deleteProduct(2)
 console.log("Products stock: \n",product.getProducts())
+
+product.updateProduct(1, 3)
+console.log(product.getProducts())
