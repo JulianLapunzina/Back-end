@@ -33,7 +33,7 @@ class ProductManager {
 
     // Método que elimina un producto con el ID desde el JSON
     deleteProduct(path, id) {
-        fs.readFile(path,"utf-8",(err, data)=> {
+        fsP.readFile(path,"utf-8",(err, data)=> {
             if(err){
                 console.log(err)
                 return
@@ -57,44 +57,57 @@ class ProductManager {
         )};
 
     // Método para actualizar productos, sólo actulizo stock por tema de no hacerlo tan largo. En cualquier caso podría agregar más.
-    updateProduct = async (path, id, stock) => {
-        try {
-            let data = await fsP.readFile(path, "utf-8")
-            const parseData = JSON.parse(data)
-            const product = parseData.find(prod => prod.id === id)
-            product.stock = stock
-            const productJSON = JSON.stringify(product, null, 2)
-            await fsP.writeFile(path, productJSON, "utf-8")
-            return console.log(`Product with id: ${id} succesfully updated`)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+//     updateProduct = async (path, id, stock) => {
+//     if(fs.existsSync("./DB.json")){
+//         try {
+//             let data = await fsP.readFile(path, "utf-8") 
+//             let products = JSON.parse(data)
+//             let productUpdate = products.findIndex(prod => prod.id === id)
+//             if()productUpdate.stock = stock
+//             await fsP.writeFile(path, JSON.stringify(productUpdate, null, 2))
+//             console.log(`Product with id: ${id} succesfully updated`)
+//         } catch (error) {
+//             console.log(error, "El producto no existe")
+//         }
+//     }
+// }
+    // updateProduct = async (path, id, updatedProduct) => {
+    //     try {
+    //         await fsP.readFile(path, "utf-8", (data) => {
+    //         const products = JSON.parse(data)
+    //         const index = products.findIndex(product => product.id === id)
+    //         if (index !== -1) {
 
+    //             products[index] = {...products[index], ...updatedProduct}
+    //         } else {
+    //             console.log(`Product with id ${id} not found`)
+    //             return
+    //         }
+    //         fsP.writeFile(path, JSON.stringify(products), "utf-8", err => {
+    //             if (err) {
+    //                 console.log(err)
+    //             } else {
+    //                 console.log(`Product with id ${id} successfully updated`)
+    //             }
+    //         })
+    //     })
+    // }catch(error) {
+    //     console.log(error)
+    // }}
 
     // Método que crea el archivo "DB.json"
-    createJsonFile (path) {
-        fs.writeFile(path,JSON.stringify([...product.products],null,2),"utf-8", (err)=> {
+    createJsonFile =  (path)=> {
+    fsP.writeFile(path,JSON.stringify([...product.products],null,2),"utf-8", (err)=> {
         if(err) return console.log(err)})
-    }
-
-        // Trae productos desde el JSON sin promesa, usando setTimeout
-    // getProducts (path) {
-    //     setTimeout(()=>{
-    //         fs.readFile(path,"utf-8",(err, contenido)=>{
-    //             if(err) console.log(err)
-    //             let parseo = JSON.parse(contenido)
-    //             console.log("Products from JSON", parseo)
-    //         }) 
-    //     }, 1000)
-    // }   
+        }
 
     // Traer productos desde el JSON pero con PROMISES.}
     getProducts = async(path)=> {
         try {
             let data = await fsP.readFile(path,"utf-8")
             const parseData = JSON.parse(data)
-            return console.log(parseData)
+            console.log(parseData)
+            return parseData
         } catch (err) {
             console.log(err)
         }
@@ -110,7 +123,6 @@ class ProductManager {
             console.log("Product from JSON with id: ",productId)
             }
         )}
-    
 }
 const product = new ProductManager()
 
@@ -131,8 +143,7 @@ product.addProduct({
     thumbnail: "public/images/tanC.png",
     code: "TanC123",
     stock: 4
-}
-)
+})
 
 // Segundo producto igual para comprobar la validación del código
 
@@ -143,8 +154,7 @@ product.addProduct({
     thumbnail: "public/images/tanC.png",
     code: "TanC123",
     stock: 4
-}
-)
+})
 //PRODUCTO CON ID 3
 product.addProduct({
     title: "El señor de los anillos",
@@ -154,7 +164,27 @@ product.addProduct({
     code: "Lor123",
     stock: 8
 })
+// PRODUCTO CON ID 4
+product.addProduct({
+    title: "Games of Thrones",
+    description: "Novela",
+    price: 600,
+    thumbnail: "public/images/path",
+    code: "GOT123",
+    stock: 12
+}
+)
 
+// PRODUCTO CON ID 5
+product.addProduct({
+    title: "Harry Potter y el príncipe Mestizos",
+    description: "Novela",
+    price: 800,
+    thumbnail: "public/images/path",
+    code: "HP123",
+    stock: 10
+}
+)
 //Acá dejo un producto con un campo sin rellenar para checkear el return de los campos incompletos
 
 product.addProduct({
@@ -168,11 +198,11 @@ product.addProduct({
 
 // Utilización de métodos
 product.createJsonFile("./DB.json")
-product.getProductById("./DB.json", 1)
-product.deleteProduct("./DB.json", 2)
+// product.getProductById("./DB.json", 1)
+// product.deleteProduct("./DB.json", 2)
+// product.updateProduct("./DB.json", 1, 6)
 product.getProducts("./DB.json")
-product.updateProduct("./DB.json", 1, 6)
 
-
+module.exports = ProductManager;
 
 
