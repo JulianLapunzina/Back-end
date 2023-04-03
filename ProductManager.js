@@ -8,7 +8,7 @@ const products = []
 const path = "./DB.json"
 
 class ProductManager {
-    constructor() {
+    constructor(path) {
         this.products = products
         this.path = path
     }
@@ -16,30 +16,30 @@ class ProductManager {
     //Método para agregar productos
     addProduct(product){
     //valida que todos los campos estén completos
-    if(!product.title ||
-    !product.description ||
-    !product.price ||
-    !product.thumbnail ||
-    !product.code ||
-    !product.stock) return console.log("Every fields are request")
-    
-    // valida el código del producto, si ya existe lo reporta por consola
-    let productPushed = this.products.find(prod => prod.code === product.code)
-    if(productPushed) return console.log(`This products was already pushed, here's the code:"${product.code}"`)
+        if(!product.title ||
+        !product.description ||
+        !product.price ||
+        !product.thumbnail ||
+        !product.code ||
+        !product.stock) return console.log("Every fields are request")
+        
+        // valida el código del producto, si ya existe lo reporta por consola
+        let productPushed = this.products.find(prod => prod.code === product.code)
+        if(productPushed) return console.log(`This products was already pushed, here's the code:"${product.code}"`)
 
-    //le asigna un id al producto agregado
-    return this.products.push({id: this.products.length+1, ...product})
+        //le asigna un id al producto agregado
+        return this.products.push({id: this.products.length+1, ...product})
     }
 
     // Método que elimina un producto con el ID desde el JSON
-    deleteProduct(path, id) {
-        fsP.readFile(path,"utf-8",(err, data)=> {
+    deleteProduct(pid) {
+        fsP.readFile(this.path,"utf-8",(err, data)=> {
             if(err){
                 console.log(err)
                 return
             }
         const product = JSON.parse(data)
-        const index = product.findIndex(product => product.id === id)
+        const index = product.findIndex(product => product.id === pid)
         if(index !== -1) {
             product.splice(index, 1)
         } else {
@@ -54,77 +54,64 @@ class ProductManager {
             } 
         }) 
         }
-        )};
-
-    // Método para actualizar productos, sólo actulizo stock por tema de no hacerlo tan largo. En cualquier caso podría agregar más.
-//     updateProduct = async (path, id, stock) => {
-//     if(fs.existsSync("./DB.json")){
-//         try {
-//             let data = await fsP.readFile(path, "utf-8") 
-//             let products = JSON.parse(data)
-//             let productUpdate = products.findIndex(prod => prod.id === id)
-//             if()productUpdate.stock = stock
-//             await fsP.writeFile(path, JSON.stringify(productUpdate, null, 2))
-//             console.log(`Product with id: ${id} succesfully updated`)
-//         } catch (error) {
-//             console.log(error, "El producto no existe")
-//         }
-//     }
-// }
-    // updateProduct = async (path, id, updatedProduct) => {
-    //     try {
-    //         await fsP.readFile(path, "utf-8", (data) => {
-    //         const products = JSON.parse(data)
-    //         const index = products.findIndex(product => product.id === id)
-    //         if (index !== -1) {
-
-    //             products[index] = {...products[index], ...updatedProduct}
-    //         } else {
-    //             console.log(`Product with id ${id} not found`)
-    //             return
-    //         }
-    //         fsP.writeFile(path, JSON.stringify(products), "utf-8", err => {
-    //             if (err) {
-    //                 console.log(err)
-    //             } else {
-    //                 console.log(`Product with id ${id} successfully updated`)
-    //             }
-    //         })
-    //     })
-    // }catch(error) {
-    //     console.log(error)
-    // }}
+    )}
 
     // Método que crea el archivo "DB.json"
     createJsonFile =  (path)=> {
-    fsP.writeFile(path,JSON.stringify([...product.products],null,2),"utf-8", (err)=> {
-        if(err) return console.log(err)})
-        }
+        fsP.writeFile(path,JSON.stringify([...product.products],null,2),"utf-8", (err)=> {
+            if(err) return console.log(err)
+        })
+    }
 
     // Traer productos desde el JSON pero con PROMISES.}
-    getProducts = async(path)=> {
+    getProducts = async(limit)=> {
         try {
-            let data = await fsP.readFile(path,"utf-8")
-            const parseData = JSON.parse(data)
-            console.log(parseData)
+            let data = await fsP.readFile(this.path,"utf-8")
+            const parseData = JSON.parse(data)            
             return parseData
         } catch (err) {
-            console.log(err)
+            return []
         }
+    }
+    // Actualizar/modificar productos
+    updateProduct(pid, newProduct) {
+        fsP.readFile(this.path, "utf-8", (err, data) => {
+            if (err) {
+                console.log(err)
+                return
+            }
+            const products = JSON.parse(data)
+            const index = products.findIndex(product => product.id === pid)
+            if (index !== -1) {
+                products[index] = { ...newProduct, pid }
+            } else {
+                console.log(`Product with id ${id} not found`)
+                return
+            }
+            fsP.writeFile(this.path, JSON.stringify(products, null, 2), "utf-8", err => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(`Product with id ${id} successfully modified`)
+                }
+            })
+        })
     }
     
     // Trae producto con ID desde JSON
-    getProductById(path, id) {
-        fs.readFile(path, "utf-8", (err, contenido)=>{
-            if(err) console.log(err)
-            let product = JSON.parse(contenido)
-            let productId = product.find(prod => prod.id === id)
-            if(!product) return "Product not found" 
-            console.log("Product from JSON with id: ",productId)
-            }
-        )}
+    async getProductById(pid) {
+        const contenido = await fsP.readFile(this.path, "utf-8")
+        
+        let product = JSON.parse(contenido)
+        let productId = product.find(prod => prod.id === pid)
+        
+        if(!product) return "Product not found" 
+        
+        return productId
+    }
+        
 }
-const product = new ProductManager()
+const product = new ProductManager("./DB.json")
 
 // PRODUCTO CON ID 1
 product.addProduct({
@@ -201,7 +188,17 @@ product.createJsonFile("./DB.json")
 // product.getProductById("./DB.json", 1)
 // product.deleteProduct("./DB.json", 2)
 // product.updateProduct("./DB.json", 1, 6)
-product.getProducts("./DB.json")
+// product.getProducts("./DB.json")
+let newProduct = {
+    title: "Tan cerca, Tan cerca",
+    description: "Cuentos",
+    price: 400,
+    thumbnail: "public/images/tanC.png",
+    code: "TanC123",
+    stock: 8
+}
+
+product.updateProduct(2,newProduct)
 
 module.exports = ProductManager;
 
