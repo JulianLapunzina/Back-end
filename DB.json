@@ -7,7 +7,7 @@
     "thumbnail": "public/images/ElOficio.jpg",
     "code": "ElOf123",
     "stock": 5,
-    "status": "true"
+    "status": true
   },
   {
     "id": 2,
@@ -17,7 +17,7 @@
     "thumbnail": "public/images/tanC.png",
     "code": "TanC123",
     "stock": 4,
-    "status": "true"
+    "status": true
   },
   {
     "id": 3,
@@ -27,7 +27,7 @@
     "thumbnail": "public/images/LOR.jpg",
     "code": "Lor123",
     "stock": 8,
-    "status": "true"
+    "status": true
   },
   {
     "id": 4,
@@ -37,7 +37,7 @@
     "thumbnail": "public/images/path",
     "code": "GOT123",
     "stock": 12,
-    "status": "true"
+    "status": true
   },
   {
     "title": "Harry Potter y el príncipe Mestizos",
@@ -46,7 +46,7 @@
     "thumbnail": "public/images/path",
     "code": "HP123",
     "stock": 11,
-    "status": "true",
+    "status": true,
     "id": 5
   }
 ]
