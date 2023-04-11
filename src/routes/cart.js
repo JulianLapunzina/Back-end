@@ -19,7 +19,8 @@ router.get("/api/carts/:cid", async (req, res)=>{
 router.post("/:cid/productos/:pid", async (req, res)=> {
     const {cid} = req.params
     const {pid} = req.params
-    return res.status(200).send({status: "success", message: "params", cid, pid})
+    const product = req.body
+    return res.status(200).send({status: "success", message: "params", cid, pid, product})
 })
 
 module.exports = router 

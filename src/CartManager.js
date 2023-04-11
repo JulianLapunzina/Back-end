@@ -17,11 +17,6 @@ constructor (path) {
 async createCart() {
     try {
         await fsP.writeFile(this.path, JSON.stringify(this.products, null, 2), {encoding: "utf-8"})
-        // const readCart = await fsP.readFile(this.path, "utf-8")
-        // const data = JSON.stringify(readCart)
-    
-        // return fsP.writeFile(this.path, JSON.stringify(data, null, 2))
-        
     }
     catch (err){
         console.log(err)
@@ -33,7 +28,7 @@ async getProducts(cid) {
         const data = await fsP.readFile(this.path, "utf-8")
         const cart = JSON.parse(data)
         const index = cart.find(prod => prod.id == cid)
-        if(!index) return console.log("Product not found") 
+        if(!index) return console.log("Cart not found") 
         else {
             return index
         }
@@ -43,6 +38,16 @@ async getProducts(cid) {
     }
 }
 
+async addProduct (uid, pid, product) {
+    try {
+        const data = await fsP.readFile(this.path, "utf-8")
+        const products = JSON.parse(data)
+        const cartNumber = products.find(prod => prod.id == uid)
+        const addProductCart = cartnumber.push(product)
+    } catch (error) {
+        
+    }
+}
 // async addProduct(product) {
 //     try {
 //     const products = await fsP.readFile(this.path, "utf-8")
