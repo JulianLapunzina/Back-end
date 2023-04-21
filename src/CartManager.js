@@ -4,27 +4,29 @@ const fs = require("fs")
 
 const cart = [{id: 1,
 products: []}]
-
 const path = "cart.json"
 
 class CartManager {
 
 constructor (path) {
     this.path = path
-    this.products = cart
+    this.cart = cart
 }
 
+prueba = [{ "products": []}]
+
+// falta ver cómo terminan lo del cart
 async createCart() {
     try {
-        await fsP.writeFile(this.path, JSON.stringify(this.products, null, 2), {encoding: "utf-8"})
+        const nuevoCarrito = await fsP.writeFile(this.path, JSON.stringify(this.cart, null, 2), {encoding: "utf-8"})
     }
     catch (err){
-        console.log(err)
+        return new Error
     }
 }
 
 async getProducts(cid) {
-    try{    
+    try {    
         const data = await fsP.readFile(this.path, "utf-8")
         const cart = JSON.parse(data)
         const index = cart.find(prod => prod.id == cid)
@@ -38,16 +40,17 @@ async getProducts(cid) {
     }
 }
 
-async addProduct (uid, pid, product) {
-    try {
-        const data = await fsP.readFile(this.path, "utf-8")
-        const products = JSON.parse(data)
-        const cartNumber = products.find(prod => prod.id == uid)
-        const addProductCart = cartnumber.push(product)
-    } catch (error) {
-        
-    }
-}
+
+// async addProduct (uid, pid, product) {
+//     try {
+//         const data = await fsP.readFile(this.path, "utf-8")
+//         const products = JSON.parse(data)
+//         const cartNumber = products.find(prod => prod.id == uid)
+//         const addProductCart = cartnumber.push(product)
+//     } catch (error) {
+//         return new Error(error)
+//     }
+// }
 // async addProduct(product) {
 //     try {
 //     const products = await fsP.readFile(this.path, "utf-8")

@@ -61,7 +61,7 @@ getProducts = async(limit)=> {
     let data = await fsP.readFile(this.path,"utf-8")
     const parseData = JSON.parse(data)            
     return parseData
-    } catch (err) {
+    } catch (error) {
         return []
     }
 }
@@ -79,7 +79,7 @@ async updateProduct (pid, newProduct) {
     }
     return fsP.writeFile(this.path, JSON.stringify(products, null, 2))
     } catch (error){
-        console.log(error)
+        return new Error(error)
     }
 }
 
@@ -95,7 +95,7 @@ async getProductById(pid) {
     
     return productId
     } catch(err) {
-    console.log(err)
+    return new Error(err)
     }
 }
 

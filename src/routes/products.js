@@ -22,7 +22,7 @@ router.get("/", async (req, res)=>{
 router.get("/:pid", async (req, res)=>{
     const {pid}= req.params
     // validar si es número
-    const productDb = await product.getProductById(parseInt(pid))
+    const productDb = await product.getProductById(pid)
     // validar que exista el producto
     if (!productDb) {
         return res.send({status: 'error', error: 'product not found'})
@@ -43,9 +43,9 @@ router.post("/", async (req, res)=>{
 
 // Actualizar/modificar un producto | Me pasa lo mismo con la validación acá. Por consola retorna bien pero la respuesta del sv no 
 router.put("/:pid", async (req, res)=>{
-    const {pid} = req.params
+    const {pid} = parseInt(req.params)
     const newProduct = req.body
-    const productUpdate = await product.updateProduct(parseInt(pid), newProduct)
+    const productUpdate = await product.updateProduct(pid, newProduct)
     
     if(productUpdate) return res.status(400).send("Product not found")
     res.status(200).send("Producto actualizado")
@@ -53,8 +53,8 @@ router.put("/:pid", async (req, res)=>{
 
 //Eliminar un producto || Lo mismo que en las otras. No logro enviar la respuesta correcta al sv pero las funciones se ejecutan correctamente
 router.delete("/:pid", async (req, res)=>{
-    const {pid} = req.params
-    const productDelete = await product.deleteProduct(parseInt(pid))
+    const {pid} = parseInt(req.params)
+    const productDelete = await product.deleteProduct(pid)
 
     if(productDelete !== undefined) {
     res.status(200).send("Product succesfully deleted")
