@@ -22,7 +22,7 @@ const httpServer = app.listen(PORT, ()=>{
 })
 
 // SOCKET SERVER
-const socketServer = new Server(httpServer)
+const io = new Server(httpServer)
 
 //json app
 app.use(express.json())
@@ -43,5 +43,28 @@ app.use('/api/productos', productRouter)
 
 //Carritos
 app.use("/", cartRouter)
+
+//socket server
+io.on("connection", socket => {
+    console.log("Nuevo cliente conectado")
+
+    socket.on("message", data => {
+        console.log(data)
+    })
+
+    socket.broadcast.emit("evento", "esto lo van a recibir solo los clientes")
+    
+    io.emit("evento-global", "este es un msj global")
+
+    let logs = []
+    socket.on("message1", data =>{
+        io.emit("log", data)
+    })
+
+    socket.on("message2", data =>{
+        logs.push({socketid:socket.id,message:data})
+        io.emit("log", {logs})
+    })
+})
 
 
