@@ -1,0 +1,1 @@
+console.log("Soy el index del GIGA-chat")
