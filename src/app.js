@@ -8,7 +8,7 @@ const path = require("path")
 const productRouter = require("./routes/products")
 const cartRouter = require("./routes/cart")
 const viewsRouter = require("./routes/views")
-const chatRouter = require("./routes/chat")
+const homeRouter = require("./routes/home")
 // ___________________________________
 
 
@@ -35,7 +35,7 @@ app.set("views", __dirname + "/views")
 app.set("view engine", "handlebars")
 
 app.use("/", viewsRouter)
-app.use("/", chatRouter)
+app.use("/", homeRouter)
 
 //PRODUCTOS
 app.use("/", productRouter)

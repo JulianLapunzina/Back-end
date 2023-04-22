@@ -13,6 +13,8 @@ socket.on("evento-global", data =>{
 
 const input = document.getElementById("text")
 const log = document.getElementById("mensajes")
+const productsContainer = document.getElementById("products-container")
+
 
 input.addEventListener("keyup", event => {
     if(event.key === "Enter"){
