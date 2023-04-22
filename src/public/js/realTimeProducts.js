@@ -1,4 +1,4 @@
-console.log("Soy el index del GIGA-chat")
+console.log("Soy el index del RealTime")
 
 const socket = io()
 
@@ -16,7 +16,7 @@ const log = document.getElementById("mensajes")
 const productsContainer = document.getElementById("products-container")
 
 
-input.addEventListener("click", event => {
+input.addEventListener("keyup", event => {
     if(event.key === "Enter"){
         socket.emit("message2", input.value)
         input.value = ""

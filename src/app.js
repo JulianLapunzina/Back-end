@@ -9,6 +9,7 @@ const productRouter = require("./routes/products")
 const cartRouter = require("./routes/cart")
 const viewsRouter = require("./routes/views")
 const homeRouter = require("./routes/home")
+const realTimeProductsRouter = require("./routes/realTimeProducts")
 // ___________________________________
 
 
@@ -36,6 +37,7 @@ app.set("view engine", "handlebars")
 
 app.use("/", viewsRouter)
 app.use("/", homeRouter)
+app.use("/", realTimeProductsRouter)
 
 //PRODUCTOS
 app.use("/", productRouter)

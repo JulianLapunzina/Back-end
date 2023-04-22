@@ -1,0 +1,15 @@
+    <h1>Products en tiempo real</h1>
+<div id="products-container">
+    <form action="./realTimeProducts.handlebars" method="POST">
+        <input type="text" placeholder="Título del libro" id="title">
+        <input type="text" placeholder="Descripción" id="description">
+        <input type="number" placeholder="precio" id="price">
+        <input type="text" placeholder="status" id="status">
+    </form>
+<button id="text">Submit</button>
+<ul id="mensajes">
+</ul>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realTimeProducts.js"></script>
