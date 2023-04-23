@@ -46,6 +46,8 @@ app.use('/api/productos', productRouter)
 //Carritos
 app.use("/", cartRouter)
 
+
+
 //socket server
 io.on("connection", socket => {
     console.log("Nuevo cliente conectado")
@@ -58,15 +60,9 @@ io.on("connection", socket => {
     
     io.emit("evento-global", "este es un msj global")
 
-    let logs = []
-    socket.on("message1", data =>{
-        io.emit("log", data)
+    socket.on("product", data =>{
+        console.log(data)
     })
-
-    socket.on("message2", data =>{
-        logs.push({socketid:socket.id,message:data})
-        io.emit("log", {logs})
-    })
+    
 })
-
 
