@@ -1,9 +1,5 @@
 const socket = io()
 
-const addProduct = (product)=> {
-    socket.emit("product", product)
-}
-
 socket.on("evento-global", data =>{
     console.log(data)
 })

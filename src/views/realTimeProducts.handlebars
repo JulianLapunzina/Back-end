@@ -1,13 +1,16 @@
     <h1>Products en tiempo real</h1>
-    <form action="http://localhost:8080/realTimeProducts" method="POST">
+    <form action="http://localhost:8080/realTimeProducts" method="POST" id= "productForm">
         <input type="text" placeholder="Título del libro" id="title">
         <input type="text" placeholder="Descripción" id="description">
         <input type="text" placeholder="rutaImagen" id="thumbnail">
         <input type="text" placeholder="code" id="code">
         <input type="number" placeholder="precio" id="price">
-        <input type="text" placeholder="status" id="status">
+        <input type="text" placeholder="status" id="status" >
         <input id="submit" type="submit">Submit</input>
     </form>
+
+<ul id="product-list"></ul>
+
 
     {{#each products}}
         <div class="card" style="width: 18 rem">
@@ -26,3 +29,35 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/realTimeProducts.js"></script>
+<script>
+const socket = io();
+const productList = document.getElementById('product-list');
+const productForm = document.getElementById("productForm")
+
+
+productForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = {
+    title: titleInput.value,
+    description: descriptionInput.value,
+    stock: stockInput.value,
+    thumbnail: thumbnailInput.value
+    status: statusInput.value
+    code: codeInput.value
+    };
+    socket.emit('create_product', formData);
+    productForm.reset();
+    })
+
+
+socket.on('product', (product) => {
+    const listItem = document.createElement('li');
+    listItem.innerHTML = `${product.title} - ${product.description} - Stock: ${product.stock}, ${product.price}, ${product.thumbnail}, ${product.code}`;
+    productList.appendChild(listItem);
+});
+</script>
+
+
+
+
+
