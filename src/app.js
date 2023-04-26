@@ -7,11 +7,20 @@ const path = require("path")
 // ROUTERS
 const productRouter = require("./routes/products")
 const cartRouter = require("./routes/cart")
-const viewsRouter = require("./routes/views")
+const usersRouter = require("./routes/views")
 const homeRouter = require("./routes/home")
 const realTimeProductsRouter = require("./routes/realTimeProducts")
+
+// CONFIG 
+const configDB = require("./config/config")
+
+
+
 // ___________________________________
 
+
+// connect db
+configDB.connectDB()
 
 // APP
 const PORT = 8080
@@ -35,7 +44,7 @@ app.engine("handlebars", handlebars.engine())
 app.set("views", __dirname + "/views")
 app.set("view engine", "handlebars")
 
-app.use("/", viewsRouter)
+app.use("/", usersRouter)
 app.use("/", homeRouter)
 app.use("/", realTimeProductsRouter)
 
@@ -64,6 +73,6 @@ io.on("connection", socket => {
         console.log(data)
     })
     
-    
+
 })
 
