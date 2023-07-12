@@ -14,10 +14,11 @@ router.get("/realTimeProducts", async(req, res) => {
 })
 
 router.post("/realTimeProducts", async (req, res) => {
-    const {title, description, stock, status, thumbnail, code} = req.body
-
-    socket.emit("product", {title, description, stock, status, thumbnail, code})
-    res.redirect('/realTimeProducts');
+    socket.on("addProduct", data =>{
+        console.log(data)
+    })
+    // const addProduct = await product.addProduct()
+    res.render('/realTimeProducts');
     // const addProduct = await product.addProduct(products)
 
     // if(addProduct) return res.send("Producto creado")

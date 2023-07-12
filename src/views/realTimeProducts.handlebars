@@ -37,6 +37,7 @@ const productForm = document.getElementById("productForm")
 
 productForm.addEventListener('submit', (event) => {
     event.preventDefault();
+
     const formData = {
     title: titleInput.value,
     description: descriptionInput.value,
@@ -45,7 +46,8 @@ productForm.addEventListener('submit', (event) => {
     status: statusInput.value
     code: codeInput.value
     };
-    socket.emit('create_product', formData);
+    
+    socket.emit('addProduct', formData);
     productForm.reset();
     })
 

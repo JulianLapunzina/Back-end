@@ -7,7 +7,7 @@ const path = require("path")
 // ROUTERS
 const productRouter = require("./routes/products")
 const cartRouter = require("./routes/cart")
-const usersRouter = require("./routes/views")
+const usersRouter = require("./routes/users")
 const homeRouter = require("./routes/home")
 const realTimeProductsRouter = require("./routes/realTimeProducts")
 
@@ -66,13 +66,11 @@ io.on("connection", socket => {
     })
 
     socket.broadcast.emit("evento", "esto lo van a recibir solo los clientes")
-    
+
     io.emit("evento-global", "este es un msj global")
 
     socket.on("product", data =>{
         console.log(data)
     })
-    
-
 })
 

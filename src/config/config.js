@@ -1,4 +1,4 @@
-const {connect} = require("mongoose")
+    const {connect} = require("mongoose")
 
 let url = 'mongodb+srv://julianlapunzina:SncMFSnmzt9P6ZgB@backend-coder.1uafuhw.mongodb.net/E-Commerce?retryWrites=true&w=majority'
 
