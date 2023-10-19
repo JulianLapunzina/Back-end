@@ -1,16 +1,11 @@
 const {promises} = require("fs")
 const fsP = promises
-const fs = require("fs")
-
-
-const products = []
-const path = "DB.json"
 
 class ProductManager {
 
-constructor(path) {
-    this.products = products
-    this.path = path
+constructor() {
+    this.products = []
+    this.path = "DB.json"
 }
 
 // Agrega productos al JSON
@@ -20,20 +15,19 @@ async addProduct(product) {
     let products = JSON.parse(productsFile)
 
     //valida que esten los campos
-    if(!product.title ||
-    !product.description ||
-    !product.price ||
-    !product.thumbnail ||
-    !product.code ||
-    !product.status ||
-    !product.stock) return console.log("Every fields are request")
+    const { title, description, price, thumbnail, code, status, stock } = product;
+    if(!title || !description || !price || !thumbnail || !code || !status || !stock) {
+        throw new Error("Every fields are requested");
+    }
 
     //asigna un id autoincremental
-    products.push({id: products.length+1, ...product})
+    products.push({id: this.products.length + 1, ...product})
+
     //escribe los datos en el archivo
-    return fsP.writeFile(this.path, JSON.stringify(products, null, 2))
+    fsP.writeFile(this.path, JSON.stringify(products, null, 2))
+    return product;
     } catch (err) {
-        console.log(err)
+        throw new Error(err)
     }
 }
 
@@ -46,12 +40,12 @@ async deleteProduct(pid) {
     if(index !== -1) {
         products.splice(index, 1)
     } else {
-        console.log(`Product with id ${pid} not found`)
-        return
+        throw new Error(`Product with id ${pid} not found`)
     }
-    return fsP.writeFile(this.path, JSON.stringify(products, null, 2),"utf-8")
+    fsP.writeFile(this.path, JSON.stringify(products, null, 2),"utf-8")
+    return console.log(`Product with id ${pid} has been deleted correctly`)
     } catch(err) {
-        console.log(err)
+        throw new Error(err)
     }
 }
 
@@ -103,4 +97,18 @@ async getProductById(pid) {
 
 module.exports = ProductManager;
 
+const productManager = new ProductManager
 
+const product120 = {
+    title: "Tan cerca, Tan cerca",
+    description: "Cuentos",
+    price: 300,
+    thumbnail: "public/images/tanC.png",
+    code: "TanC123",
+    stock: 4,
+    status: true
+    }
+    
+
+productManager.addProduct(product120)
+// productManager.deleteProduct(7)

@@ -1,12 +1,12 @@
 const {Router} = require("express")
 const ProductManager = require("../ProductManager")
 
-const product = new ProductManager("DB.json")
+const product = new ProductManager("/DB.json")
 const router = Router()
 
 router.get("/", async (req, res)=>{
     const { limit } = req.query
-    const products = await product.getProducts()        
+    const products = await product.getProducts(limit)        
     if(!limit) {
         return res.send({
             status: 'success',

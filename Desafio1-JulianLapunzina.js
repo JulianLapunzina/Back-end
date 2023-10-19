@@ -29,21 +29,19 @@ const product1 = {
 //     thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCSHXJkh8B7et4l1_sCx5cn5OYKTWevSgzFBakNGzK8hcNO0GR'
 // }
 
-
-
 class ProductManager {
     constructor() {
         this.products = []
     }
     addProduct(product) {
         if(!product.title ||
-           !product.price ||
-           !product.code || 
-           !product.stock ||
-           !product.description ||
-           !product.thumbnail) {
+            !product.price ||
+            !product.code || 
+            !product.stock ||
+            !product.description ||
+            !product.thumbnail) {
             throw new Error('Every fields are requested')
-           }
+            }
         else {
             let codes = this.products.map(product => product.code)
             if(codes.includes(product.code)) {

@@ -1,3 +1,21 @@
 <div>
-    <h1>Hola {{name}} {{lastname}} que gusto verte!!</h1>
+{{#each datosTablaVotacionUsuario}}
+<tr>
+    <td>{{Votacion}}</td>
+    <td>
+    {{#if (eq Voto 1)}}
+        Positivo
+    {{else if (eq Voto 0)}}
+        Negativo
+    {{else if (eq Voto 3)}}
+        Abstención
+    {{else if (eq Voto 4)}}
+        Sin voto
+    {{else}}
+        Otro
+    {{/if}}
+    </td>
+    <td>{{Usuario}}</td>
+</tr>
+{{/each}}
 </div>

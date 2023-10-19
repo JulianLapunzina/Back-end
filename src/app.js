@@ -4,23 +4,23 @@ const handlebars = require("express-handlebars")
 const {Server} = require("socket.io")
 const path = require("path")
 
+
 // ROUTERS
 const productRouter = require("./routes/products")
 const cartRouter = require("./routes/cart")
 const usersRouter = require("./routes/users")
 const homeRouter = require("./routes/home")
 const realTimeProductsRouter = require("./routes/realTimeProducts")
-
+const votosRouter = require("./routes/votos")
 // CONFIG 
-const configDB = require("./config/config")
+// const configDB = require("./config/config")
 
 
 
-// ___________________________________
 
 
-// connect db
-configDB.connectDB()
+// // connect db
+// configDB.connectDB()
 
 // APP
 const PORT = 8080
@@ -41,12 +41,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // hbs ------
 app.engine("handlebars", handlebars.engine())
+// ___________________________________
+const hbs = handlebars.create({})
+
+hbs.handlebars.registerHelper({eq: function (a) {
+switch(a) {
+    case 1: return "Positivo"
+    break
+    case 0: return "Negativo"
+    break
+    case 3: return "Abstención"
+    break
+    default: return "No voto"
+}
+}
+})
 app.set("views", __dirname + "/views")
 app.set("view engine", "handlebars")
 
 app.use("/", usersRouter)
 app.use("/", homeRouter)
 app.use("/", realTimeProductsRouter)
+app.use("/", votosRouter)
 
 //PRODUCTOS
 app.use("/", productRouter)

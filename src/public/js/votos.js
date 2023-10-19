@@ -1,0 +1,1 @@
+const divPrueba = document.getElementById("divPrueba")

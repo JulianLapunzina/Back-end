@@ -1,0 +1,54 @@
+<div class="votaciones">
+    <h1>{{title}}</h1><br>
+    <h2 style="text-align:center; position: relative; left:38vw">Expediente N°: {{expediente}}</h2>
+</div>
+
+<div class="divPrueba">
+    <table>
+        <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Voto</th>
+        </tr>
+{{#each votaciones}}
+        <tr>
+        <td>{{this.nombre}}</td>
+        <td>{{this.apellido}}</td>
+        <td>{{eq this.voto}}</td>
+        </tr>
+{{/each}}
+    </table>
+</div>
+
+<div class="formDiv">
+    <form action="POST">
+
+    <div style="width: 600px; border: solid 1px white; padding: 10px">
+        <h3>Datos</h3>
+    <label for="nombre">Nombre</label><br>
+    <input type="text" id="nombre" name="nombre"><br>
+    <label for="apellido">Apellido</label><br>
+    <input type="text" id="apellido" name="apellido"><br><br>
+        <h3>Voto</h3>
+    <input type="radio" id="positivo" name="positivo" value="Positivo">
+    <label for="positivo">Positivo</label><br>
+    <input type="radio" id="negativo" name="negativo" value="Negativo">
+    <label for="negativo">Negativo</label><br>
+    <input type="radio" id="abstencion" name="abstencion" value="Abstención">
+    <label for="abstencion">Abstención</label><br>
+    </div>
+
+    <div style="width: 183px; position: relative; left: 328px; bottom: 320px;">
+    <h3>Verificación</h3><br>
+    <input type="checkbox" id="verificado" name="verficado">
+    <label for="verificado">Verificado</label><br>
+    <input type="submit" value="Cambiar Voto" id="btnSubmit">
+    </div>
+
+    </form>
+
+</div>
+
+
+
+<script src="/js/votos.js"></script>
